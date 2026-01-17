@@ -50,7 +50,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Basic Validation: Check if text is digits and length is between 10-15
     if not user_text.isdigit() or len(user_text) < 10 or len(user_text) > 15:
-        await update.message.reply_text("**Invalid format**\n\n**Please send a valid 10-digit mobile number**")
+        await update.message.reply_text("𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝖿𝗈𝗋𝗆𝖺𝗍 𝖯𝗅𝖾𝖺𝗌𝖾 𝗌𝖾𝗇𝖽 𝖺 𝗏𝖺𝗅𝗂𝖽 10-𝖽𝗂𝗀𝗂𝗍 𝗆𝗈𝖻𝗂𝗅𝖾 𝗇𝗎𝗆𝖻𝖾𝗋")
         return
 
     # Notify user that processing is happening
@@ -98,14 +98,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
-                    text="**No details found for this number.**"
+                    text="**No details found for this number**"
                 )
 
         elif response.status_code == 429:
              await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=processing_msg.message_id,
-                text="**Rate limit exceeded. Please try again later or upgrade your plan.**"
+                text="Rate limit exceeded Please try again later or upgrade your plan"
             )
         
         elif response.status_code == 401:
@@ -120,7 +120,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=processing_msg.message_id,
-                text=f"**Error:** {error_msg}"
+                text=f"Error: {error_msg}"
             )
 
     except Exception as e:

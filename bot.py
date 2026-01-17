@@ -67,12 +67,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         response = requests.get(API_BASE_URL, params=params)
         data = response.json()
 
-                # Check API Logic based on your docs
-                 if response.status_code == 200 and data.get("success") is True:
+                 # Check API Logic based on your docs
+        if response.status_code == 200 and data.get("success") is True:
             
-                # Check if results exist
-                 if data.get("result") and len(data["result"]) > 0:
-                    info = data["result"][0]
+            # Check if results exist
+            if data.get("result") and len(data["result"]) > 0:
+                info = data["result"][0]
                 
                 # Format the Output Message
                 result_text = (

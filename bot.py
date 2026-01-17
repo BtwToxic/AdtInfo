@@ -19,17 +19,17 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_first_name = update.effective_user.first_name
     
     welcome_text = (
-        f"Hello {user_first_name}! 👋\n\n"
-        "I can help you find details about a phone number.\n"
-        "You can simply **send me a 10-digit mobile number** directly, "
-        "or use the buttons below."
+        f"**Hello {user_first_name}!** 🚓\n\n"
+        "**I can help you find details about a phone number**.\n\n"
+        "**You can simply send me a 10-digit mobile number**\n\n"
+        "**or use the buttons below.**"
     )
 
     # Inline Buttons
     keyboard = [
         [
-            InlineKeyboardButton("👨‍💻 Developer", url="https://t.me/iscxm"),
-            InlineKeyboardButton("🔍 Track Number", callback_data="track_btn")
+            InlineKeyboardButton("Info 🔍", callback_data="track_btn")
+            InlineKeyboardButton("Developer 👨‍💻", user_id="8028731472")
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -42,7 +42,7 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer() # Acknowledge the click
 
     if query.data == "track_btn":
-        await query.message.reply_text("Please send the 10-digit mobile number you want to lookup.")
+        await query.message.reply_text("**Please send the 10-digit mobile number you want to lookup.**")
 
 # --- MESSAGE HANDLER (API LOGIC) ---
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -50,11 +50,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Basic Validation: Check if text is digits and length is between 10-15
     if not user_text.isdigit() or len(user_text) < 10 or len(user_text) > 15:
-        await update.message.reply_text("Invalid format. Please send a valid 10-digit mobile number.")
+        await update.message.reply_text("**Invalid format.**\n\n**Please send a valid 10-digit mobile number.**")
         return
 
     # Notify user that processing is happening
-    processing_msg = await update.message.reply_text("🔍 Searching details... Please wait.")
+    processing_msg = await update.message.reply_text("**Searching details...**🚓🔍\n\n**Please wait.**")
 
     try:
         # Prepare parameters for the API
@@ -76,15 +76,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 
                 # Format the Output Message
                 result_text = (
-                    f"✅ **Details Found!**\n\n"
-                    f"📱 **Mobile:** `{info.get('mobile', 'N/A')}`\n"
-                    f"👤 **Name:** {info.get('name', 'N/A')}\n"
-                    f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n"
-                    f"📍 **Address:** {info.get('address', 'N/A')}\n"
-                    f"🌐 **Circle:** {info.get('circle', 'N/A')}\n"
-                    f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n"
+                    f"🚓 **Details Found!**\n\n"
+                    f"📱 **Mobile:** `{info.get('mobile', 'N/A')}`\n\n"
+                    f"👤 **Name:** {info.get('name', 'N/A')}\n\n"
+                    f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n\n"
+                    f"📍 **Address:** {info.get('address', 'N/A')}\n\n"
+                    f"🌐 **Circle:** {info.get('circle', 'N/A')}\n\n"
+                    f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n\n"
                     f"---------------\n"
-                    f"ℹ️ {data.get('credit', 'Source API')}"
+                    f"**Devloped By**—[Toxic](https://t.me/iscxm)"
                 )
                 
                 await context.bot.edit_message_text(
@@ -97,7 +97,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
-                    text="No details found for this number."
+                    text="**No details found for this number.**"
                 )
 
         elif response.status_code == 429:

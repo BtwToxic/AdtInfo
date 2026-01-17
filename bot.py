@@ -5,8 +5,8 @@ from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, Callb
 
 # --- CONFIGURATION ---
 # Replace these with your actual details
-TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN_HERE"
-NUM_INFO_API_KEY = "YOUR_NUMINFO_API_KEY_HERE"
+TELEGRAM_BOT_TOKEN = "8549965128:AAFfyPIMiNvYPFP3qEHZb_VEw8tL7GIN62I"
+NUM_INFO_API_KEY = "9ea6615bf30c4890"
 API_BASE_URL = "https://daily-binny-ryuioggv-391a9381.koyeb.app/api/lookup"
 
 # --- LOGGING SETUP ---

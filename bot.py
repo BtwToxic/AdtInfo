@@ -86,7 +86,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"-------------------------\n"
                     f"**Developed By** [Toxic Dev](https://t.me/iscxm) 🚓"
                 )
-                 await context.bot.edit_message_text(
+              
+              await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
                     text=result_text,

@@ -50,11 +50,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Basic Validation: Check if text is digits and length is between 10-15
     if not user_text.isdigit() or len(user_text) < 10 or len(user_text) > 15:
-        await update.message.reply_text("**Invalid format.**\n\n**Please send a valid 10-digit mobile number.**")
+        await update.message.reply_text("**Invalid format**\n\n**Please send a valid 10-digit mobile number**")
         return
 
     # Notify user that processing is happening
-    processing_msg = await update.message.reply_text("**Searching details...🚓🔍\n\nPlease Wait**")
+    processing_msg = await update.message.reply_text("𝖲𝖾𝖺𝗋𝖼𝗁𝗂𝗇𝗀 𝖽𝖾𝗍𝖺𝗂𝗅𝗌...🚓🔍")
 
     try:
         # Prepare parameters for the API
@@ -76,7 +76,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 
                 # Format the Output Message
                 result_text = (
-                    f"🚓 **Details Found! ✅**\n\n"
+                    f"**Details Found ✅**\n\n"
                     f"📱 **Mobile:** `{info.get('mobile', 'N/A')}`\n\n"
                     f"👤 **Name:** {info.get('name', 'N/A')}\n\n"
                     f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n\n"
@@ -84,7 +84,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"🌐 **Circle:** {info.get('circle', 'N/A')}\n\n"
                     f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n\n"
                     f"---------------\n"
-                    f"**Devloped By** [Toxic Dev](https://t.me/iscxm)"
+                    f"**Devloped By** [Toxic Dev](https://t.me/iscxm) 🚓"
                 )
                 
                 await context.bot.edit_message_text(

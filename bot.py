@@ -91,33 +91,21 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
                     text=result_text,
-                    parse_mode='HTML',
-                    disable_web_page_preview=True
+                    parse_mode='Markdown'
                 )
             else:
                 await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
-                    text="❌ <b>No Details Found:</b>",
-                    parse_mode='HTML'
+                    text="No details found for this number."
                 )
-        else:
-            await context.bot.edit_message_text(
+
+        elif response.status_code == 429:
+             await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=processing_msg.message_id,
-                text="<b>API Error:</b> API LIMIT OVER",
-                parse_mode='HTML'
+                text="**Rate limit exceeded. Please try again later or upgrade your plan.**"
             )
-
-    except Exception as e:
-        print(f"Major Error: {e}")
-        # Final safety message agar kuch aur crash ho jaye
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text="⚠️ Ek unexpected error aayi hai. Developer se contact karein."
-                )
-        
-    
         
         elif response.status_code == 401:
              await context.bot.edit_message_text(
@@ -131,7 +119,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=processing_msg.message_id,
-                text=f"Error: {error_msg}"
+                text=f"**Error:** {error_msg}"
             )
 
     except Exception as e:

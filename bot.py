@@ -4,8 +4,9 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 
 # --- CONFIGURATION ---
-TELEGRAM_BOT_TOKEN = "8549965128:AAFfyPIMiNvYPFP3qEHZb_VEw8tL7GIN62I"
-NUM_INFO_API_KEY = "9ea6615bf30c4890"
+# Replace these with your actual details
+TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN_HERE"
+NUM_INFO_API_KEY = "YOUR_NUMINFO_API_KEY_HERE"
 API_BASE_URL = "https://daily-binny-ryuioggv-391a9381.koyeb.app/api/lookup"
 
 # --- LOGGING SETUP ---
@@ -28,7 +29,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Inline Buttons
     keyboard = [
         [
-            InlineKeyboardButton("👨‍💻 Developer", url="https://t.me/iscxm"),
+            InlineKeyboardButton("👨‍💻 Developer", url="https://t.me/hackedanu"),
             InlineKeyboardButton("🔍 Track Number", callback_data="track_btn")
         ]
     ]
@@ -50,7 +51,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Basic Validation: Check if text is digits and length is between 10-15
     if not user_text.isdigit() or len(user_text) < 10 or len(user_text) > 15:
-        await update.message.reply_text("Invalid format. Please send a valid 10-digit mobile number.")
+        await update.message.reply_text("❌ Invalid format. Please send a valid 10-digit mobile number.")
         return
 
     # Notify user that processing is happening
@@ -82,7 +83,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n"
                     f"📍 **Address:** {info.get('address', 'N/A')}\n"
                     f"🌐 **Circle:** {info.get('circle', 'N/A')}\n"
-                    f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n"
+                    f"🆔 **ID Number:** `{info.get('id_number', 'N/A')}`\n"
                     f"---------------\n"
                     f"ℹ️ {data.get('credit', 'Source API')}"
                 )
@@ -97,14 +98,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
-                    text="No details found for this number."
+                    text="❌ No details found for this number."
                 )
 
         elif response.status_code == 429:
              await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=processing_msg.message_id,
-                text="**Rate limit exceeded. Please try again later or upgrade your plan.**"
+                text="⚠️ Rate limit exceeded. Please try again later or upgrade your plan."
             )
         
         elif response.status_code == 401:
@@ -119,7 +120,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=processing_msg.message_id,
-                text=f"**Error:** {error_msg}"
+                text=f"❌ Error: {error_msg}"
             )
 
     except Exception as e:
@@ -127,7 +128,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.edit_message_text(
             chat_id=update.effective_chat.id,
             message_id=processing_msg.message_id,
-            text="An internal error occurred. Please try again later."
+            text="❌ An internal error occurred. Please try again later."
         )
 
 # --- MAIN APP ---
@@ -143,4 +144,4 @@ if __name__ == '__main__':
 
     print("Bot is running...")
     application.run_polling()
-
+    

@@ -29,7 +29,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [
             InlineKeyboardButton("Info 🔍", callback_data="track_btn"),
-            InlineKeyboardButton("Developer 👨‍💻", user_id="8028731472")
+            InlineKeyboardButton("Developer 👨‍💻", url="tg://user?id=8028731472")
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)

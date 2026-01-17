@@ -84,7 +84,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                f"🆔 <b>Aadhar Number:</b> <code>{info.get('id_number', 'N/A')}</code>\n\n"
                f"----------------------\n"
                f"<b>Developed By</b> — <a href='https://t.me/iscxm'>Toxic Dev 🚓</a>"
-            ) 
+               ) 
 
            await context.bot.edit_message_text(
                  chat_id=update.effective_chat.id,

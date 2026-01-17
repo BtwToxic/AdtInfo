@@ -84,7 +84,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"🌐 <b>Circle:</b> {info.get('circle', 'N/A')}\n\n"
                     f"🆔 <b>Aadhar Number:</b> <code>{info.get('id_number', 'N/A')}</code>\n\n"
                     f"----------------------\n"
-                    f"<b>Developed By</b> — <a href='https://t.me/iscxm'>Toxic Dev 🚓</a>"
+                    f"Developed [Toxic Dev](https://t.me/iscxm) 🚓"
                 )
 
                 await context.bot.edit_message_text(

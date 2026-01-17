@@ -83,15 +83,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"📍 **Address:** {info.get('address', 'N/A')}\n\n"
                     f"🌐 **Circle:** {info.get('circle', 'N/A')}\n\n"
                     f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n\n"
-                    f"---------------\n"
-                    f"**Devloped By** [Toxic Dev](https://t.me/iscxm) 🚓"
+                    f"-------------------------\n"
+                    f"<b>Developed By</b> — <a href='https://t.me/iscxm'>Toxic Dev 🚓</a>"
                 )
-                
                 await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
                     text=result_text,
-                    parse_mode='Markdown',
+                    parse_mode='HTML',
                     disable_web_page_preview=True
                 )
             else:

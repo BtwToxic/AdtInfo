@@ -76,7 +76,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 
                 # Format the Output Message
                 result_text = (
-                    f"🚓 **Details Found!**\n\n"
+                    f"🚓 **Details Found! ✅**\n\n"
                     f"📱 **Mobile:** `{info.get('mobile', 'N/A')}`\n\n"
                     f"👤 **Name:** {info.get('name', 'N/A')}\n\n"
                     f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n\n"
@@ -84,7 +84,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"🌐 **Circle:** {info.get('circle', 'N/A')}\n\n"
                     f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n\n"
                     f"---------------\n"
-                    f"**Devloped By**—[Toxic](https://t.me/iscxm)"
+                    f"**Devloped By** [Toxic Dev](https://t.me/iscxm)"
                 )
                 
                 await context.bot.edit_message_text(

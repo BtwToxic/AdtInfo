@@ -73,26 +73,27 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             # Check if results exist
             if data.get("result") and len(data["result"]) > 0:
                 info = data["result"][0]
-                
-                # Format the Output Message
-                result_text = (
-                    f"**Details Found ✅**\n\n"
-                    f"📱 **Mobile:** `{info.get('mobile', 'N/A')}`\n\n"
-                    f"👤 **Name:** {info.get('name', 'N/A')}\n\n"
-                    f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n\n"
-                    f"📍 **Address:** {info.get('address', 'N/A')}\n\n"
-                    f"🌐 **Circle:** {info.get('circle', 'N/A')}\n\n"
-                    f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n\n"
-                    f"-------------------------\n"
-                    f"<b>Developed By</b> — <a href='https://t.me/iscxm'>Toxic Dev 🚓</a>"
-                )
-                await context.bot.edit_message_text(
-                    chat_id=update.effective_chat.id,
-                    message_id=processing_msg.message_id,
-                    text=result_text,
-                    parse_mode='HTML',
-                    disable_web_page_preview=True
-                )
+
+         result_text = (
+               f"🚓 <b>Details Found!</b> ✅\n\n"
+               f"📱 <b>Mobile:</b> <code>{info.get('mobile', 'N/A')}</code>\n\n"
+               f"👤 <b>Name:</b> {info.get('name', 'N/A')}\n\n"
+               f"👨‍🦳 <b>Father Name:</b> {info.get('father_name', 'N/A')}\n\n"
+               f"📍 <b>Address:</b> {info.get('address', 'N/A')}\n\n"
+               f"🌐 <b>Circle:</b> {info.get('circle', 'N/A')}\n\n"
+               f"🆔 <b>Aadhar Number:</b> <code>{info.get('id_number', 'N/A')}</code>\n\n"
+               f"----------------------\n"
+               f"<b>Developed By</b> — <a href='https://t.me/iscxm'>Toxic Dev 🚓</a>"
+            ) 
+
+           await context.bot.edit_message_text(
+                 chat_id=update.effective_chat.id,
+                 message_id=processing_msg.message_id,
+                 text=result_text,
+                 parse_mode='HTML',         
+                 disable_web_page_preview=True 
+               )
+
             else:
                 await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,

@@ -54,7 +54,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     # Notify user that processing is happening
-    processing_msg = await update.message.reply_text("**Searching details...**🚓🔍\n\n**Please wait.**")
+    processing_msg = await update.message.reply_text("**Searching details...🚓🔍\n\nPlease Wait**")
 
     try:
         # Prepare parameters for the API
@@ -91,7 +91,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
                     text=result_text,
-                    parse_mode='Markdown'
+                    parse_mode='Markdown',
+                    disable_web_page_preview=True
                 )
             else:
                 await context.bot.edit_message_text(

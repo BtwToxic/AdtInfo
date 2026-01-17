@@ -56,56 +56,77 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Notify user that processing is happening
     processing_msg = await update.message.reply_text("𝖲𝖾𝖺𝗋𝖼𝗁𝗂𝗇𝗀 𝖽𝖾𝗍𝖺𝗂𝗅𝗌...🚓🔍")
 
-    try:
-        # Prepare parameters for the API
-        params = {
-            "key": NUM_INFO_API_KEY,
-            "mobile": user_text
-        }
-
-        # Make the API Request
+        try:
+        # API Request
         response = requests.get(API_BASE_URL, params=params)
-        data = response.json()
+        
+        # Terminal pe check karne ke liye ki API kya bhej raha hai
+        print(f"DEBUG: Status {response.status_code}, Response: {response.text[:100]}")
 
-        # Check API Logic based on your docs
-        if response.status_code == 200 and data.get("success") is True:
+        # Try to parse JSON safely
+        try:
+            data = response.json()
+        except Exception as json_err:
+            print(f"JSON Error: {json_err}")
+            await context.bot.edit_message_text(
+                chat_id=update.effective_chat.id,
+                message_id=processing_msg.message_id,
+                text="❌ <b>Server Error:</b> API se sahi data nahi mila. Baad mein try karein.",
+                parse_mode='HTML'
+            )
+            return
+
+        # Check if API call was successful
+        if response.status_code == 200 and data.get("success"):
+            results = data.get("result", [])
             
-            # Check if results exist
-            if data.get("result") and len(data["result"]) > 0:
-                info = data["result"][0]
-                
-                # Format the Output Message
+            if results and len(results) > 0:
+                info = results[0]  # Pehla result uthao
+
+                # result_text aur await dono isi 'if' block ke andar hone chahiye
                 result_text = (
-                    f"✅ **Details Found!**\n\n"
-                    f"📱 **Mobile:** `{info.get('mobile', 'N/A')}`\n"
-                    f"👤 **Name:** {info.get('name', 'N/A')}\n"
-                    f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n"
-                    f"📍 **Address:** {info.get('address', 'N/A')}\n"
-                    f"🌐 **Circle:** {info.get('circle', 'N/A')}\n"
-                    f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n"
-                    f"---------------\n"
-                    f"ℹ️ {data.get('credit', 'Source API')}"
+                    f"🚓 <b>Details Found!</b> ✅\n\n"
+                    f"📱 <b>Mobile:</b> <code>{info.get('mobile', 'N/A')}</code>\n\n"
+                    f"👤 <b>Name:</b> {info.get('name', 'N/A')}\n\n"
+                    f"👨‍🦳 <b>Father Name:</b> {info.get('father_name', 'N/A')}\n\n"
+                    f"📍 <b>Address:</b> {info.get('address', 'N/A')}\n\n"
+                    f"🌐 <b>Circle:</b> {info.get('circle', 'N/A')}\n\n"
+                    f"🆔 <b>Aadhar Number:</b> <code>{info.get('id_number', 'N/A')}</code>\n\n"
+                    f"----------------------\n"
+                    f"<b>Developed By</b> — <a href='https://t.me/iscxm'>Toxic Dev 🚓</a>"
                 )
-                
+
                 await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
                     text=result_text,
-                    parse_mode='Markdown'
+                    parse_mode='HTML',
+                    disable_web_page_preview=True
                 )
             else:
                 await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
-                    text="No details found for this number."
+                    text="❌ <b>No Details Found:</b> Is number ka data database mein nahi hai.",
+                    parse_mode='HTML'
                 )
-
-        elif response.status_code == 429:
-             await context.bot.edit_message_text(
+        else:
+            await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=processing_msg.message_id,
-                text="Rate limit exceeded Please try again later or upgrade your plan"
+                text="❌ <b>API Error:</b> API key invalid hai ya limit khatam ho gayi hai.",
+                parse_mode='HTML'
             )
+
+    except Exception as e:
+        print(f"Major Error: {e}")
+        # Final safety message agar kuch aur crash ho jaye
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text="⚠️ Ek unexpected error aayi hai. Developer se contact karein."
+                )
+        
+    
         
         elif response.status_code == 401:
              await context.bot.edit_message_text(

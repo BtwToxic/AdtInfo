@@ -67,7 +67,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         response = requests.get(API_BASE_URL, params=params)
         data = response.json()
 
-                 # Check API Logic based on your docs
+        # Check API Logic based on your docs
         if response.status_code == 200 and data.get("success") is True:
             
             # Check if results exist
@@ -76,30 +76,28 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 
                 # Format the Output Message
                 result_text = (
-                    f"**Details Found ✅**\n\n"
-                    f"📱 **Mobile:** `{info.get('mobile', 'N/A')}`\n\n"
-                    f"👤 **Name:** {info.get('name', 'N/A')}\n\n"
-                    f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n\n"
-                    f"📍 **Address:** {info.get('address', 'N/A')}\n\n"
-                    f"🌐 **Circle:** {info.get('circle', 'N/A')}\n\n"
-                    f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n\n"
-                    f"-------------------------\n"
-                    f"**Developed By** [Toxic Dev](https://t.me/iscxm) 🚓"
+                    f"✅ **Details Found!**\n\n"
+                    f"📱 **Mobile:** `{info.get('mobile', 'N/A')}`\n"
+                    f"👤 **Name:** {info.get('name', 'N/A')}\n"
+                    f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n"
+                    f"📍 **Address:** {info.get('address', 'N/A')}\n"
+                    f"🌐 **Circle:** {info.get('circle', 'N/A')}\n"
+                    f"🆔 **Aadhar Number:** `{info.get('id_number', 'N/A')}`\n"
+                    f"---------------\n"
+                    f"ℹ️ {data.get('credit', 'Source API')}"
                 )
-              
-              await context.bot.edit_message_text(
+                
+                await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
                     text=result_text,
-                    parse_mode='Markdown',
-                    disable_web_page_preview=True
+                    parse_mode='Markdown'
                 )
-                
-         else:
-              await context.bot.edit_message_text(
+            else:
+                await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
-                    text="**No details found for this number**"
+                    text="No details found for this number."
                 )
 
         elif response.status_code == 429:

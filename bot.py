@@ -76,15 +76,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 
 
                 result_text = (
-                    f"🚓 <b>Details Found!</b> ✅\n\n"
-                    f"📱 <b>Mobile:</b> <code>{info.get('mobile', 'N/A')}</code>\n\n"
-                    f"👤 <b>Name:</b> {info.get('name', 'N/A')}\n\n"
-                    f"👨‍🦳 <b>Father Name:</b> {info.get('father_name', 'N/A')}\n\n"
-                    f"📍 <b>Address:</b> {info.get('address', 'N/A')}\n\n"
-                    f"🌐 <b>Circle:</b> {info.get('circle', 'N/A')}\n\n"
-                    f"🆔 <b>Aadhar Number:</b> <code>{info.get('id_number', 'N/A')}</code>\n\n"
+                    f"🚓 **Details Found!** ✅\n\n"
+                    f"📱 **Mobile:**{info.get('mobile', 'N/A')}\n\n"
+                    f"👤 **Name:** {info.get('name', 'N/A')}\n\n"
+                    f"👨‍🦳 **Father Name:** {info.get('father_name', 'N/A')}\n\n"
+                    f"📍 **Address:** {info.get('address', 'N/A')}\n\n"
+                    f"🌐 **Circle:** {info.get('circle', 'N/A')}\n\n"
+                    f"🆔 **Aadhar Number:** {info.get('id_number', 'N/A')} \n\n"
                     f"----------------------\n"
-                    f"Developed [Toxic Dev](https://t.me/iscxm) 🚓"
+                    f"**Developed By** [Toxic Dev](https://t.me/iscxm) 🚓"
                 )
 
                 await context.bot.edit_message_text(

@@ -42,7 +42,7 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer() # Acknowledge the click
 
     if query.data == "track_btn":
-        await query.message.reply_text("Please send the 10-digit mobile number you want to lookup.")
+        await query.message.reply_text("𝖯𝗅𝖾𝖺𝗌𝖾 𝗌𝖾𝗇𝖽 𝗍𝗁𝖾 10-𝖽𝗂𝗀𝗂𝗍 𝗆𝗈𝖻𝗂𝗅𝖾 𝗇𝗎𝗆𝖻𝖾𝗋 𝗒𝗈𝗎 𝗐𝖺𝗇𝗍 𝗍𝗈 𝗅𝗈𝗈𝗄𝗎𝗉.")
 
 # --- MESSAGE HANDLER (API LOGIC) ---
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -50,11 +50,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Basic Validation: Check if text is digits and length is between 10-15
     if not user_text.isdigit() or len(user_text) < 10 or len(user_text) > 15:
-        await update.message.reply_text("Invalid format. Please send a valid 10-digit mobile number.")
+        await update.message.reply_text("𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝖿𝗈𝗋𝗆𝖺𝗍. 𝖯𝗅𝖾𝖺𝗌𝖾 𝗌𝖾𝗇𝖽 𝖺 𝗏𝖺𝗅𝗂𝖽 10-𝖽𝗂𝗀𝗂𝗍 𝗆𝗈𝖻𝗂𝗅𝖾 𝗇𝗎𝗆𝖻𝖾𝗋.")
         return
 
     # Notify user that processing is happening
-    processing_msg = await update.message.reply_text("🔍 Searching details... Please wait.")
+    processing_msg = await update.message.reply_text("𝖲𝖾𝖺𝗋𝖼𝗁𝗂𝗇𝗀 𝖽𝖾𝗍𝖺𝗂𝗅𝗌...🔍")
 
     try:
         # Prepare parameters for the API
@@ -104,7 +104,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
              await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=processing_msg.message_id,
-                text="**Rate limit exceeded. Please try again later or upgrade your plan.**"
+                text="**Rate limit exceeded**"
             )
         
         elif response.status_code == 401:

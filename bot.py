@@ -42,7 +42,7 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer() # Acknowledge the click
 
     if query.data == "track_btn":
-        await query.message.reply_text("𝖯𝗅𝖾𝖺𝗌𝖾 𝗌𝖾𝗇𝖽 𝗍𝗁𝖾 10-𝖽𝗂𝗀𝗂𝗍 𝗆𝗈𝖻𝗂𝗅𝖾 𝗇𝗎𝗆𝖻𝖾𝗋 𝗒𝗈𝗎 𝗐𝖺𝗇𝗍 𝗍𝗈 𝗅𝗈𝗈𝗄𝗎𝗉.")
+        await query.message.reply_text("Please send the 10-digit mobile number you want to lookup.")
 
 # --- MESSAGE HANDLER (API LOGIC) ---
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -50,40 +50,31 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Basic Validation: Check if text is digits and length is between 10-15
     if not user_text.isdigit() or len(user_text) < 10 or len(user_text) > 15:
-        await update.message.reply_text("𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝖿𝗈𝗋𝗆𝖺𝗍 𝖯𝗅𝖾𝖺𝗌𝖾 𝗌𝖾𝗇𝖽 𝖺 𝗏𝖺𝗅𝗂𝖽 10-𝖽𝗂𝗀𝗂𝗍 𝗆𝗈𝖻𝗂𝗅𝖾 𝗇𝗎𝗆𝖻𝖾𝗋")
+        await update.message.reply_text("Invalid format. Please send a valid 10-digit mobile number.")
         return
 
     # Notify user that processing is happening
-    processing_msg = await update.message.reply_text("𝖲𝖾𝖺𝗋𝖼𝗁𝗂𝗇𝗀 𝖽𝖾𝗍𝖺𝗂𝗅𝗌...🚓🔍")
+    processing_msg = await update.message.reply_text("🔍 Searching details... Please wait.")
 
-        try:
-        # API Request
+    try:
+        # Prepare parameters for the API
+        params = {
+            "key": NUM_INFO_API_KEY,
+            "mobile": user_text
+        }
+
+        # Make the API Request
         response = requests.get(API_BASE_URL, params=params)
-        
-        # Terminal pe check karne ke liye ki API kya bhej raha hai
-        print(f"DEBUG: Status {response.status_code}, Response: {response.text[:100]}")
+        data = response.json()
 
-        # Try to parse JSON safely
-        try:
-            data = response.json()
-        except Exception as json_err:
-            print(f"JSON Error: {json_err}")
-            await context.bot.edit_message_text(
-                chat_id=update.effective_chat.id,
-                message_id=processing_msg.message_id,
-                text="❌ <b>Server Error:</b> API se sahi data nahi mila. Baad mein try karein.",
-                parse_mode='HTML'
-            )
-            return
-
-        # Check if API call was successful
-        if response.status_code == 200 and data.get("success"):
-            results = data.get("result", [])
+        # Check API Logic based on your docs
+        if response.status_code == 200 and data.get("success") is True:
             
-            if results and len(results) > 0:
-                info = results[0]  # Pehla result uthao
+            # Check if results exist
+            if data.get("result") and len(data["result"]) > 0:
+                info = data["result"][0]
+                
 
-                # result_text aur await dono isi 'if' block ke andar hone chahiye
                 result_text = (
                     f"🚓 <b>Details Found!</b> ✅\n\n"
                     f"📱 <b>Mobile:</b> <code>{info.get('mobile', 'N/A')}</code>\n\n"
@@ -107,14 +98,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=processing_msg.message_id,
-                    text="❌ <b>No Details Found:</b> Is number ka data database mein nahi hai.",
+                    text="❌ <b>No Details Found:</b>",
                     parse_mode='HTML'
                 )
         else:
             await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=processing_msg.message_id,
-                text="❌ <b>API Error:</b> API key invalid hai ya limit khatam ho gayi hai.",
+                text="<b>API Error:</b> API LIMIT OVER",
                 parse_mode='HTML'
             )
 

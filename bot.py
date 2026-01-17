@@ -28,7 +28,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Inline Buttons
     keyboard = [
         [
-            InlineKeyboardButton("Info 🔍", callback_data="track_btn")
+            InlineKeyboardButton("Info 🔍", callback_data="track_btn"),
             InlineKeyboardButton("Developer 👨‍💻", user_id="8028731472")
         ]
     ]
